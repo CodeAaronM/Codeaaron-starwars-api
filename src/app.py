@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Character, Planet
+from models import db, User, Character, Planet, Ship
 #from models import Person
 
 app = Flask(__name__)
@@ -152,6 +152,61 @@ def delete_planet_by_id(planet_id):
     db.session.commit()
 
     return jsonify(planet.serialize()), 200
+
+#ship
+
+@app.route('/ship', methods=['GET'])
+def get_ship():
+    all_ships = Ship.query.all()
+    ships = list(map(lambda character: character.serialize(),all_ships))
+    return jsonify(ships), 200
+
+@app.route('/ship/<int:ship_id>', methods=['GET'])
+def get_ship_by_id(ship_id):
+    ship = Ship.query.filter_by(id=ship_id).first()
+
+    if ship is None:
+        return jsonify({"error": "ship not found"}), 404
+
+    return jsonify(ship.serialize()), 200
+
+@app.route('/ship', methods=['POST'])
+def post_ship():
+    body = request.get_json()
+
+    if 'name' not in body:
+        return jsonify('debes poner un nombre'), 200
+    if 'Model' not in body:
+        return jsonify('debes poner un Model'), 200
+    if 'manufacturer' not in body:
+        return jsonify('debes poner un manufacturer'), 200
+    if 'cost_in_credits' not in body:
+        return jsonify('debes poner un cost_in_credits'), 200
+    if 'crew' not in body:
+        return jsonify('debes poner un crew'), 200
+    
+    if body['name'] == '':
+        return jsonify('el nombre no puede estar vacio'), 200
+    
+    ship = Ship(**body)
+    db.session.add(ship)
+    db.session.commit()
+    return jsonify('se creo ship exitosamente'), 200
+
+
+@app.route('/ship/<int:ship_id>', methods=['DELETE'])
+def delete_ship_by_id(ship_id):
+    ship = Ship.query.filter_by(id=ship_id).first()
+
+    if ship is None:
+        return jsonify({"error": "ship not found"}), 404
+    
+    db.session.delete(ship)
+    db.session.commit()
+
+    return jsonify(ship.serialize()), 200
+
+
 
 
 # this only runs if `$ python src/app.py` is executed

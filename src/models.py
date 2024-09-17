@@ -69,14 +69,28 @@ class Planet(db.Model):
             "diameter": self.diameter
         }
 
-# class Ship(db.Model):
-#     __tablename__ = 'Ship'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(250))
-#     Model = db.Column(db.String(250))
-#     manufacturer = db.Column(db.String(250))
-#     cost_in_credits = db.Column(db.Integer)
-#     crew = db.Column(db.Integer)
+class Ship(db.Model):
+    __tablename__ = 'Ship'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250))
+    Model = db.Column(db.String(250))
+    manufacturer = db.Column(db.String(250))
+    cost_in_credits = db.Column(db.Integer)
+    crew = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<Ship %r>' % self.Ship
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "Model": self.Model,
+            "manufacturer": self.manufacturer,
+            "cost_in_credits": self.cost_in_credits,
+            "crew": self.crew,
+        }
+
 
 # class User_character(db.Model):
 #     __tablename__ = 'User_character'
