@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Character
+from models import db, User, Character, Planet
 #from models import Person
 
 app = Flask(__name__)
@@ -95,6 +95,64 @@ def delete_character_by_id(character_id):
     db.session.commit()
 
     return jsonify(character.serialize()), 200
+
+
+
+#planet
+
+@app.route('/planet', methods=['GET'])
+def get_planet():
+    all_planets = Planet.query.all()
+    planets = list(map(lambda character: character.serialize(),all_planets))
+    return jsonify(planets), 200
+
+@app.route('/planet/<int:planet_id>', methods=['GET'])
+def get_planet_by_id(planet_id):
+    planet = Planet.query.filter_by(id=planet_id).first()
+
+    if planet is None:
+        return jsonify({"error": "planet not found"}), 404
+
+    return jsonify(planet.serialize()), 200
+
+@app.route('/planet', methods=['POST'])
+def post_planet():
+    body = request.get_json()
+
+    if 'name' not in body:
+        return jsonify('debes poner un nombre'), 200
+    if 'climate' not in body:
+        return jsonify('debes poner un climate'), 200
+    if 'population' not in body:
+        return jsonify('debes poner un population'), 200
+    if 'orbital_period' not in body:
+        return jsonify('debes poner un orbital_period'), 200
+    if 'rotation_period' not in body:
+        return jsonify('debes poner un rotation_period'), 200
+    if 'diameter' not in body:
+        return jsonify('debes poner un diameter'), 200
+    
+    if body['name'] == '':
+        return jsonify('el nombre no puede estar vacio'), 200
+    
+    planet = Planet(**body)
+    db.session.add(planet)
+    db.session.commit()
+    return jsonify('se creo planet exitosamente'), 200
+
+
+@app.route('/planet/<int:planet_id>', methods=['DELETE'])
+def delete_planet_by_id(planet_id):
+    planet = Planet.query.filter_by(id=planet_id).first()
+
+    if planet is None:
+        return jsonify({"error": "planet not found"}), 404
+    
+    db.session.delete(planet)
+    db.session.commit()
+
+    return jsonify(planet.serialize()), 200
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':

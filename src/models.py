@@ -45,29 +45,38 @@ class Character(db.Model):
             "eye_color": self.eye_color
         }
 
+class Planet(db.Model):
+    __tablename__ = 'Planet'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), nullable=False)
+    climate = db.Column(db.String(250))
+    population = db.Column(db.String(250))
+    orbital_period = db.Column(db.String(250))
+    rotation_period = db.Column(db.String(250))
+    diameter = db.Column(db.String(250))
+
+    def __repr__(self):
+        return '<Planet %r>' % self.Planet
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "climate": self.climate,
+            "population": self.population,
+            "orbital_period": self.orbital_period,
+            "rotation_period": self.rotation_period,
+            "diameter": self.diameter
+        }
+
 # class Ship(db.Model):
 #     __tablename__ = 'Ship'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(250), nullable=False)
-#     climate = db.Column(db.String(250))
-#     population = db.Column(db.String(250))
-#     orbital_period = db.Column(db.String(250))
-#     rotation_period = db.Column(db.String(250))
-#     diameter = db.Column(db.String(250))
-
-# class Planet(db.Model):
-#     __tablename__ = 'Planet'
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String(250))
 #     Model = db.Column(db.String(250))
 #     manufacturer = db.Column(db.String(250))
 #     cost_in_credits = db.Column(db.Integer)
 #     crew = db.Column(db.Integer)
-
-# class User(db.Model):
-#     __tablename__ = 'User'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(250), nullable=False)
 
 # class User_character(db.Model):
 #     __tablename__ = 'User_character'
