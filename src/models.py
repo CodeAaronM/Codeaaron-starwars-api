@@ -157,36 +157,3 @@ class Favorite_Ship(db.Model):
             "ship_id": self.ship_id,
             "description": self.description
         }
-
-
-# class User_character(db.Model):
-#     __tablename__ = 'User_character'
-#     id = db.Column(db.Integer, primary_key=True)
-#     User_id = db.Column(db.Integer, db.ForeignKey('User.id'))
-#     User = db.relationship(User)
-#     Character_id = db.Column(db.Integer, db.ForeignKey('Character.id'))
-#     Character = db.relationship(Character)
-
-# class User_Planet(db.Model):
-#     __tablename__ = 'User_Planet'
-#     id = db.Column(db.Integer, primary_key=True)
-#     User_id = db.Column(db.Integer, db.ForeignKey('User.id'))
-#     User = db.relationship(User)
-#     Planet_id = db.Column(db.Integer, db.ForeignKey('Planet.id'))
-#     Planet = db.relationship(Planet)
-
-# class User_Ship(db.Model):
-#     __tablename__ = 'User_Ship'
-#     id = db.Column(db.Integer, primary_key=True)
-#     User_id = db.Column(db.Integer, db.ForeignKey('User.id'))
-#     User = db.relationship(User)
-#     Ship_id = db.Column(db.Integer, db.ForeignKey('Ship.id'))
-#     Ship = db.relationship(Ship)
-
-# class Character_Ship(db.Model):
-#     __tablename__ = 'Character_Ship'
-#     id = db.Column(db.Integer, primary_key=True)
-#     Character_id = db.Column(db.Integer, db.ForeignKey('Character.id'))
-#     Character = db.relationship(Character)
-#     Ship_id = db.Column(db.Integer, db.ForeignKey('Ship.id'))
-#     Ship = db.relationship(Ship)
