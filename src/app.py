@@ -269,7 +269,7 @@ def add_favorite_planet():
     new_favorite = Favorite_Planet(
         user_id=request_body["user_id"],
         planet_id=request_body["planet_id"],
-        description=f"{user.username} likes {planet.name}"
+        description=f"{user.email} likes {planet.name}"
     )
 
     db.session.add(new_favorite)
@@ -311,7 +311,7 @@ def add_favorite_character():
     new_favorite = Favorite_Character(
         user_id=request_body["user_id"],
         character_id=request_body["character_id"],
-        description=f"{user.username} likes {character.name}"
+        description=f"{user.email} likes {character.name}"
     )
 
     db.session.add(new_favorite)
@@ -352,7 +352,7 @@ def add_favorite_ship():
     new_favorite = Favorite_Ship(
         user_id=request_body["user_id"],
         ship_id=request_body["ship_id"],
-        description=f"{user.username} likes {ship.name}"
+        description=f"{user.email} likes {ship.name}"
     )
 
     db.session.add(new_favorite)
